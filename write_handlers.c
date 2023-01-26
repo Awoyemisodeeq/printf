@@ -80,8 +80,6 @@ int handle_write_char(char c, char buffer[],
         return (write(1, &buffer[0], 1));
 
 }
-
-
 /************************* WRITE NUMBER *************************/
 
 /**
@@ -109,31 +107,31 @@ int handle_write_char(char c, char buffer[],
  */
 
 int write_number(int is_negative, int ind, char buffer[],
-OBOB
+
         int flags, int width, int precision, int size)
 
-OB{
+{
 
         int length = BUFF_SIZE - ind - 1;
-OB
-OB        char padd = ' ', extra_ch = 0;
-OB
+
+        char padd = ' ', extra_ch = 0;
+
 
         UNUSED(size);
-OB
+
 
         if ((flags & F_ZERO) && !(flags & F_MINUS))
-OB
+
                 padd = '0';
-OB
+
         if (is_negative)
 
-OB                extra_ch = '-';
+                extra_ch = '-';
 
         else if (flags & F_PLUS)
 
                 extra_ch = '+';
-OB
+
         else if (flags & F_SPACE)
 
                 extra_ch = ' ';
@@ -144,8 +142,6 @@ int write_number(int is_negative, int ind, char buffer[],
                 length, padd, extra_ch));
 
 }
-
-
 /**
 
  * write_num - Write a number using a bufffer
@@ -170,10 +166,10 @@ int write_number(int is_negative, int ind, char buffer[],
 
  * Return: Number of printed chars.
 
-OB */
+ */
 
 int write_num(int ind, char buffer[],
-OB
+
         int flags, int width, int prec,
 
         int length, char padd, char extra_c)
@@ -186,19 +182,19 @@ int write_num(int ind, char buffer[],
         if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0' && width == 0)
 
                 return (0); /* printf(".0d", 0)  no char is printed */
-OAOA
-OAOA        if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0')
-OA
-                buffer[ind] = padd = ' '; /* width is displayed with padding ' ' */
-OAOA
-OA        if (prec > 0 && prec < length)
 
-OA                padd = ' ';
+        if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0')
+
+                buffer[ind] = padd = ' '; /* width is displayed with padding ' ' */
+
+        if (prec > 0 && prec < length)
+
+                padd = ' ';
 
         while (prec > length)
 
                 buffer[--ind] = '0', length++;
-OA
+
         if (extra_c != 0)
 
                 length++;
@@ -243,12 +239,12 @@ int write_num(int ind, char buffer[],
 
                         if (extra_c)
 
-OAOAOA                                buffer[--padd_start] = extra_c;
+                                buffer[--padd_start] = extra_c;
 
-OA                        return (write(1, &buffer[padd_start], i - padd_start) +
+                        return (write(1, &buffer[padd_start], i - padd_start) +
 
                                 write(1, &buffer[ind], length - (1 - padd_start)));
-OA
+
                 }
 
         }
@@ -260,7 +256,6 @@ int write_num(int ind, char buffer[],
         return (write(1, &buffer[ind], length));
 
 }
-
 
 /**
 
@@ -366,8 +361,6 @@ int write_unsgnd(int is_negative, int ind,
         return (write(1, &buffer[ind], length));
 
 }
-
-
 /**
 
  * write_pointer - Write a memory address
@@ -461,18 +454,18 @@ int write_pointer(char buffer[], int ind, int length,
 
                                 write(1, &buffer[ind], length - (1 - padd_start) - 2));
 
-OB                }
+                }
 
         }
 
         buffer[--ind] = 'x';
 
         buffer[--ind] = '0';
-OB
+
         if (extra_c)
 
                 buffer[--ind] = extra_c;
 
         return (write(1, &buffer[ind], BUFF_SIZE - ind - 1));
-OB
+
 }
